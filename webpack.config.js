@@ -128,7 +128,7 @@ module.exports = ({ production, server, extractCss, coverage, analyze, karma } =
       // self-host workbox configuration
       importWorkboxFrom: 'local',
       // this is where we want our ServiceWorker to be created
-      swDest: path.resolve('dist', 'service-worker.js')
+      swDest: path.resolve(outDir, 'service-worker.js')
     })
   ]
 });
