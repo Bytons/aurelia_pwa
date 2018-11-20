@@ -7,6 +7,7 @@ const project = require('./aurelia_project/aurelia.json');
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 // config helpers:
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
@@ -14,7 +15,7 @@ const when = (condition, config, negativeConfig) =>
   condition ? ensureArray(config) : ensureArray(negativeConfig);
 
 // primary config:
-const title = 'Aurelia Navigation Skeleton';
+const title = 'Bytons PWA';
 const outDir = path.resolve(__dirname, project.platform.output);
 const srcDir = path.resolve(__dirname, 'src');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
@@ -24,7 +25,7 @@ const cssRules = [
   { loader: 'css-loader' },
 ];
 
-module.exports = ({production, server, extractCss, coverage, analyze, karma} = {}) => ({
+module.exports = ({ production, server, extractCss, coverage, analyze, karma } = {}) => ({
   resolve: {
     extensions: ['.ts', '.js'],
     modules: [srcDir, 'node_modules'],
@@ -59,8 +60,8 @@ module.exports = ({production, server, extractCss, coverage, analyze, karma} = {
         test: /\.css$/i,
         issuer: [{ not: [{ test: /\.html$/i }] }],
         use: extractCss ? [{
-            loader: MiniCssExtractPlugin.loader
-          },
+          loader: MiniCssExtractPlugin.loader
+        },
           'css-loader'
         ] : ['style-loader', ...cssRules]
       },
@@ -105,7 +106,7 @@ module.exports = ({production, server, extractCss, coverage, analyze, karma} = {
       'Promise': 'bluebird'
     }),
     new ModuleDependenciesPlugin({
-      'aurelia-testing': [ './compile-spy', './view-spy' ]
+      'aurelia-testing': ['./compile-spy', './view-spy']
     }),
     new HtmlWebpackPlugin({
       template: 'index.ejs',
@@ -120,6 +121,14 @@ module.exports = ({production, server, extractCss, coverage, analyze, karma} = {
     })),
     ...when(production || server, new CopyWebpackPlugin([
       { from: 'static', to: outDir }])),
-    ...when(analyze, new BundleAnalyzerPlugin())
+    ...when(analyze, new BundleAnalyzerPlugin()),
+
+      new WorkboxPlugin.InjectManifest({
+      swSrc: './src/service-worker.js',
+      // self-host workbox configuration
+      importWorkboxFrom: 'local',
+      // this is where we want our ServiceWorker to be created
+      swDest: path.resolve('dist', 'service-worker.js')
+    })
   ]
 });

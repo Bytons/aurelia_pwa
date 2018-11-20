@@ -1,5 +1,6 @@
 'use strict';
 const path = require('path');
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function (config) {
   config.set({
@@ -13,7 +14,7 @@ module.exports = function (config) {
      *
      * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
      */
-    frameworks: [ 'jasmine' ],
+    frameworks: ['jasmine'],
 
     /**
      * list of files / patterns to load in the browser
@@ -28,7 +29,7 @@ module.exports = function (config) {
      * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
      */
     preprocessors: {
-      'test/karma-bundle.js': [ 'webpack' ]
+      'test/karma-bundle.js': ['webpack']
     },
 
     webpack: require('../webpack.config')({ coverage: true, karma: true }),
@@ -39,10 +40,10 @@ module.exports = function (config) {
      * possible values: 'dots', 'progress'
      * available reporters: https://npmjs.org/browse/keyword/karma-reporter
      */
-    reporters: [ 'mocha', 'progress', 'coverage-istanbul' ],
+    reporters: ['mocha', 'progress', 'coverage-istanbul'],
 
     coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly', 'text-summary' ],
+      reports: ['html', 'lcovonly', 'text-summary'],
       dir: path.resolve(__dirname, 'coverage-karma'),
       fixWebpackSourcePaths: true,
     },
