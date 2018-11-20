@@ -1,5 +1,5 @@
 export default {
-  debug: true,
-  testing: true,
+  debug: false,
+  testing: false,
   swUrl: 'service-worker.js'
 };
