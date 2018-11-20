@@ -1,5 +1,5 @@
-importScripts("/precache-manifest.94d57be5c1693a4a32db90ad74e26e56.js", "/workbox-v3.6.3/workbox-sw.js");
-workbox.setConfig({modulePathPrefix: "/workbox-v3.6.3"});
+importScripts("/aurelia_pwa/precache-manifest.dc544c40915439e47955e0cd2b57fc78.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
 this.workbox.setConfig({ debug: true });
 
