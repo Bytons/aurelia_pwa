@@ -1,5 +1,6 @@
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { autoinject } from 'aurelia-framework';
+import environment from 'environment';
 
 @autoinject
 export class ServiceWorkerUtil {
@@ -23,7 +24,6 @@ export class ServiceWorkerUtil {
      */
     public register() {
         if ('serviceWorker' in navigator) {
-            console.log('helo');
             this.registerServiceWorker();
         } else {
             console.log('Browser does not support service workers');
@@ -41,7 +41,7 @@ export class ServiceWorkerUtil {
     }
 
     private async registerServiceWorker() {
-        this.reg = await navigator.serviceWorker.register('/service-worker.js');
+        this.reg = await navigator.serviceWorker.register(environment.swUrl);
 
         if (this.reg.waiting) { this.isUpdateResolve(this.reg); }
 
