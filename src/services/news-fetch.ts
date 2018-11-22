@@ -1,6 +1,7 @@
 import { HttpClient } from 'aurelia-fetch-client';
 import { autoinject } from 'aurelia-framework';
 import { apiKey } from '../config/app-config';
+import { RedditArticle } from '../models/article';
 
 @autoinject
 export class NewsFetch {
@@ -9,7 +10,7 @@ export class NewsFetch {
 
     client.configure((config) => {
       config
-        .withBaseUrl('https://newsapi.org/v2/top-headlines?')
+        .withBaseUrl('https://newsapi.org/v2/')
         .withDefaults({
           credentials: 'same-origin',
           headers: {
@@ -31,12 +32,13 @@ export class NewsFetch {
 
   }
 
-  public getRedditFeed() {
-    this.client.fetch('sources=reddit-r-all')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+  public async getTopHeadlines() {
+    const data = await this.client.fetch('top-headlines?sources=reddit-r-all').then((response) => response.json());
+    return data.articles;
+  }
 
+  public async getRecentArticles(): Promise<RedditArticle[]> {
+    const data = await this.client.fetch('everything?sources=reddit-r-all').then((response) => response.json());
+    return data.articles;
   }
 }

@@ -30,6 +30,7 @@ export class ServiceWorkerUtil {
         }
         this.installPromptListener();
         this.monitorOfflineOnline();
+        this.installBroadCastListener();
     }
 
     public removeEntryFromCache(entry, cacheName) {
@@ -69,6 +70,17 @@ export class ServiceWorkerUtil {
                 }
                 sessionStorage.promptChoice = choiceResult.outcome;
             });
+        });
+    }
+
+      // install listener for cached updates to requests and publish them to eventAggregator for later use
+      private installBroadCastListener() {
+        const updatesChannel = new BroadcastChannel('reddit-feed-updates');
+        updatesChannel.addEventListener('message', async (event) => {
+            const { cacheName, updatedUrl } = event.data.payload;
+            const cache = await caches.open(cacheName);
+            const updatedResponse = await cache.match(updatedUrl);
+            this.ea.publish(`feed-update:/${updatedUrl}`, updatedResponse);
         });
     }
 

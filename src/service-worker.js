@@ -1,5 +1,37 @@
 // disable/enable debug logging
-this.workbox.setConfig({ debug: true });
+workbox.setConfig({ debug: true });
+
+const bgSyncPlugin = new workbox.backgroundSync.Plugin('test-queue', {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+});
+
+// plugin for cache expiry and clear
+const expirationPlugin = new workbox.expiration.Plugin({
+  maxEntries: 20
+});
+
+// cache opaque responses
+const cacheOpaques = new workbox.cacheableResponse.Plugin({
+  statuses: [0, 200]
+});
+
+const apiUrl = 'https://newsapi.org/v2/'
+
+
+// routes
+
+workbox.routing.registerRoute(
+  new RegExp(apiUrl),
+  workbox.strategies.staleWhileRevalidate({
+      cacheName: 'reddit-feed',
+      plugins: [
+          expirationPlugin,
+          bgSyncPlugin,
+          cacheOpaques,
+          new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
+      ]
+  }),
+);
 
 
 self.addEventListener('message', (messageEvent) => {
@@ -42,7 +74,7 @@ function removeEntry(data) {
 
 
 // set precache
-this.workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
 // fallback route in SPA
-this.workbox.routing.registerNavigationRoute('/index.html');
+workbox.routing.registerNavigationRoute('/index.html');

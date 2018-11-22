@@ -10,7 +10,7 @@ const httpClient = new HttpClient();
 const newsFecth = new NewsFetch(httpClient);
 
 describe('the app', () => {
-  it('Should ask to register SW', () => {
-    expect(new App(swUtil, newsFecth).message).toBe('Registering SW for testing');
+  it('Should display reddit r-all PWA', () => {
+    expect(new App(swUtil, newsFecth).message).toBe('Reddit /r/ all PWA');
   });
 });

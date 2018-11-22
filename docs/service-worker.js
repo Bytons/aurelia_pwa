@@ -1,7 +1,39 @@
-importScripts("/aurelia_pwa/precache-manifest.11877c6b55351eb7cc607c7f53a5b2b8.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.5c623e641ee28fc9c2d58765ec7b4362.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
-this.workbox.setConfig({ debug: true });
+workbox.setConfig({ debug: true });
+
+const bgSyncPlugin = new workbox.backgroundSync.Plugin('test-queue', {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+});
+
+// plugin for cache expiry and clear
+const expirationPlugin = new workbox.expiration.Plugin({
+  maxEntries: 20
+});
+
+// cache opaque responses
+const cacheOpaques = new workbox.cacheableResponse.Plugin({
+  statuses: [0, 200]
+});
+
+const apiUrl = 'https://newsapi.org/v2/'
+
+
+// routes
+
+workbox.routing.registerRoute(
+  new RegExp(apiUrl),
+  workbox.strategies.staleWhileRevalidate({
+      cacheName: 'reddit-feed',
+      plugins: [
+          expirationPlugin,
+          bgSyncPlugin,
+          cacheOpaques,
+          new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
+      ]
+  }),
+);
 
 
 self.addEventListener('message', (messageEvent) => {
@@ -44,7 +76,8 @@ function removeEntry(data) {
 
 
 // set precache
-this.workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
 // fallback route in SPA
-this.workbox.routing.registerNavigationRoute('/index.html');
+workbox.routing.registerNavigationRoute('/index.html');
+

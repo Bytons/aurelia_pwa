@@ -1,3 +1,9 @@
 <template>
   <h1>${message}</h1>
+  <div repeat.for="article of articles">
+    <div>Title: ${article.title}</div>
+    <div> Description:${article.description}</div>
+    <div> Content:${article.content}</div>
+  </div>
+  <div>Powered by <a href="https://newsapi.org/">NewsAPI.org</a></div>
 </template>
