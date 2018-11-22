@@ -1,9 +1,9 @@
 self.__precacheManifest = [
   {
-    "url": "/aurelia_pwa/vendor.744ae76afe2d24f24fbb.bundle.js"
+    "url": "/aurelia_pwa/vendor.17c7505e69d50449103b.bundle.js"
   },
   {
-    "revision": "00d786f3d30961083dff557cce7aaf3d",
+    "revision": "7dedea3b95892396465bdf38215872c9",
     "url": "/aurelia_pwa/index.html"
   },
   {
@@ -11,6 +11,6 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/favicon.ico"
   },
   {
-    "url": "/aurelia_pwa/app.a8f9235428984775678c.bundle.js"
+    "url": "/aurelia_pwa/app.ebc7ac7e2b4854c25dd3.bundle.js"
   }
 ];

@@ -1,5 +1,5 @@
 export default {
-  debug: true,
-  testing: true,
-  swUrl: 'service-worker.js'
+  debug: false,
+  testing: false,
+  swUrl: '/aurelia_pwa/service-worker.js'
 };
