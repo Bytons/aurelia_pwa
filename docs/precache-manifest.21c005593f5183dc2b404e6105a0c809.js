@@ -3,7 +3,7 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/vendor.889b3d4deee8268c8db2.bundle.js"
   },
   {
-    "revision": "76ced5070067606d7b1263339a7d2475",
+    "revision": "e8360a461d2ac763bf10deb92aed4615",
     "url": "/aurelia_pwa/index.html"
   },
   {

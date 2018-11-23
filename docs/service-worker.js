@@ -1,4 +1,4 @@
-importScripts("/aurelia_pwa/precache-manifest.5c623e641ee28fc9c2d58765ec7b4362.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.21c005593f5183dc2b404e6105a0c809.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
 workbox.setConfig({ debug: true });
@@ -13,9 +13,6 @@ const expirationPlugin = new workbox.expiration.Plugin({
 });
 
 // cache opaque responses
-const cacheOpaques = new workbox.cacheableResponse.Plugin({
-  statuses: [0, 200]
-});
 
 const apiUrl = 'https://newsapi.org/v2/'
 
@@ -29,7 +26,6 @@ workbox.routing.registerRoute(
       plugins: [
           expirationPlugin,
           bgSyncPlugin,
-          cacheOpaques,
           new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
       ]
   }),
