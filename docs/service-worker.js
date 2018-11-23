@@ -13,6 +13,9 @@ const expirationPlugin = new workbox.expiration.Plugin({
 });
 
 // cache opaque responses
+const cacheOpaques = new workbox.cacheableResponse.Plugin({
+  statuses: [0, 200]
+});
 
 const apiUrl = 'https://newsapi.org/v2/'
 
@@ -26,6 +29,7 @@ workbox.routing.registerRoute(
       plugins: [
           expirationPlugin,
           bgSyncPlugin,
+          cacheOpaques,
           new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
       ]
   }),
