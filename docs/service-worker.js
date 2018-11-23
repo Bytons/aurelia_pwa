@@ -75,5 +75,5 @@ function removeEntry(data) {
 workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
 // fallback route in SPA
-workbox.routing.registerNavigationRoute('index.html');
+// workbox.routing.registerNavigationRoute('index.html');
 
