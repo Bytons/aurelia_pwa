@@ -1,0 +1,25 @@
+<template>
+    <ul md-collapsible="accordion: false;  popout: true;" repeat.for="item of items" md-collapsible.ref="collapsible">
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">whatshot</i>
+                <div class="title">${item.title}</div>
+                <div>${item.description}</div>
+            </div>
+            <div class="collapsible-body">
+                <div class="row">
+                    <div if.bind="item.urlToImage" class="col s6">
+                        <h4>Post image</h4>
+                        <img md-box width="300" alt="image could not be cached" src="${item.urlToImage}">
+                    </div>
+                    <div class="col s6">
+                        <h4>Post Description</h4>
+                        ${item.content ? item.content : 'Post had no description'}
+                        <a href="${item.url}" target="_blank">. . .Go to live post</a>
+                    </div>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+</template>

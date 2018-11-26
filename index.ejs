@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <title><%- htmlWebpackPlugin.options.metadata.title %></title>
+    <title>
+        <%- htmlWebpackPlugin.options.metadata.title %>
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#4285f4">
     <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- imported CSS are concatenated and added automatically -->
-  </head>
-  <body aurelia-app="main">
+</head>
+
+<body aurelia-app="main">
     <% if (htmlWebpackPlugin.options.metadata.server) { %>
     <!-- Webpack Dev Server reload -->
     <script src="/webpack-dev-server.js"></script>
     <% } %>
-  </body>
+</body>
+
 </html>

@@ -73,8 +73,8 @@ export class ServiceWorkerUtil {
         });
     }
 
-      // install listener for cached updates to requests and publish them to eventAggregator for later use
-      private installBroadCastListener() {
+    // install listener for cached updates to requests and publish them to eventAggregator for later use
+    private installBroadCastListener() {
         const updatesChannel = new BroadcastChannel('reddit-feed-updates');
         updatesChannel.addEventListener('message', async (event) => {
             const { cacheName, updatedUrl } = event.data.payload;
@@ -85,9 +85,6 @@ export class ServiceWorkerUtil {
     }
 
     private monitorOfflineOnline() {
-        window.addEventListener('load', () => {
-            this.publishOnlineStatus();
-        });
         window.addEventListener('online', () => this.publishOnlineStatus());
         window.addEventListener('offline', () => this.publishOnlineStatus());
     }

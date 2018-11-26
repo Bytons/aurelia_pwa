@@ -2,36 +2,81 @@
 workbox.setConfig({ debug: true });
 
 const bgSyncPlugin = new workbox.backgroundSync.Plugin('test-queue', {
-  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+    maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
 });
 
 // plugin for cache expiry and clear
 const expirationPlugin = new workbox.expiration.Plugin({
-  maxEntries: 20
+    maxEntries: 20
 });
 
 // cache opaque responses
 const cacheOpaques = new workbox.cacheableResponse.Plugin({
-  statuses: [0, 200]
+    statuses: [0, 200]
 });
 
 const apiUrl = 'https://newsapi.org/v2/'
+const redditExternalImgpreview = 'https://external-preview.redd.it/'
+const redditInternalPreview = 'https://preview.redd.it/'
+const redditMedia = 'https://i.redditmedia.com/'
+const imgurSource = 'https://i.imgur.com/'
+
 
 
 // routes
+workbox.routing.registerRoute(
+    new RegExp(apiUrl),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'reddit-feed',
+        plugins: [
+            expirationPlugin,
+            bgSyncPlugin,
+            cacheOpaques,
+            new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
+        ]
+    }),
+);
 
 workbox.routing.registerRoute(
-  new RegExp(apiUrl),
-  workbox.strategies.staleWhileRevalidate({
-      cacheName: 'reddit-feed',
-      plugins: [
-          expirationPlugin,
-          bgSyncPlugin,
-          cacheOpaques,
-          new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
-      ]
-  }),
+    new RegExp(redditMedia),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'media-reddit-images',
+        plugins: [
+            expirationPlugin
+        ]
+    }),
 );
+
+workbox.routing.registerRoute(
+    new RegExp(redditExternalImgpreview),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'external-reddit-image-preview-feed',
+        plugins: [
+            expirationPlugin
+        ]
+    }),
+);
+
+workbox.routing.registerRoute(
+    new RegExp(redditInternalPreview),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'internal-reddit-image-preview-feed',
+        plugins: [
+            expirationPlugin
+        ]
+    }),
+);
+
+workbox.routing.registerRoute(
+    new RegExp(imgurSource),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'imgur-image-preview-feed',
+        plugins: [
+            expirationPlugin
+        ]
+    }),
+);
+
 
 
 self.addEventListener('message', (messageEvent) => {
@@ -72,6 +117,13 @@ function removeEntry(data) {
     })
 }
 
+// additional assets to precache
+const additionalCacheAssets = ['https://fonts.googleapis.com/icon?family=Material+Icons',
+    'https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2']
+
+for (let i = 0; i < additionalCacheAssets.length; i++) {
+    self.__precacheManifest.push({ url: additionalCacheAssets[i] });
+}
 
 // set precache
 workbox.precaching.precacheAndRoute(self.__precacheManifest || []);

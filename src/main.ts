@@ -3,31 +3,33 @@
 import { Aurelia } from 'aurelia-framework';
 import { PLATFORM } from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
+import 'materialize-css';
 import 'whatwg-fetch';
 import environment from './environment';
+import './styles/main.scss';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
 
 export function configure(aurelia: Aurelia) {
-  aurelia.use
-    .standardConfiguration()
-    .feature(PLATFORM.moduleName('resources/index'));
+    aurelia.use
+        .standardConfiguration()
+        .feature(PLATFORM.moduleName('resources/index'))
+        .plugin(PLATFORM.moduleName('aurelia-materialize-bridge'), (b) => b.useAll());
+    // Uncomment the line below to enable animation.
+    // aurelia.use.plugin(PLATFORM.moduleName('aurelia-animator-css'));
+    // if the css animator is enabled, add swap-order="after" to all router-view elements
 
-  // Uncomment the line below to enable animation.
-  // aurelia.use.plugin(PLATFORM.moduleName('aurelia-animator-css'));
-  // if the css animator is enabled, add swap-order="after" to all router-view elements
+    // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
+    // aurelia.use.plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'));
 
-  // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
-  // aurelia.use.plugin(PLATFORM.moduleName('aurelia-html-import-template-loader'));
+    if (environment.debug) {
+        aurelia.use.developmentLogging();
+    }
 
-  if (environment.debug) {
-    aurelia.use.developmentLogging();
-  }
+    if (environment.testing) {
+        aurelia.use.plugin(PLATFORM.moduleName('aurelia-testing'));
+    }
 
-  if (environment.testing) {
-    aurelia.use.plugin(PLATFORM.moduleName('aurelia-testing'));
-  }
-
-  return aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
+    return aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
 }
