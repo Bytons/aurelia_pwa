@@ -11,7 +11,7 @@ export class ToastUtil {
         if (!isOnline) {
             this.toast.show('Internet connection lost', 2000, 'error');
         } else {
-            this.toast.show('Internet connection returned', 2000, 'primary');
+            this.toast.show('Internet connection returned', 2000, 'success');
         }
     }
 }
