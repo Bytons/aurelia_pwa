@@ -35,7 +35,7 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/manifest/images/icons/icon-128x128.png"
   },
   {
-    "revision": "113b511c7dc8b024ec1010e82e31556a",
+    "revision": "ae1358e9f75d49c4cf2279bed8f35047",
     "url": "/aurelia_pwa/index.html"
   },
   {
