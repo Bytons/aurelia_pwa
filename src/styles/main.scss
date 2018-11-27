@@ -1,4 +1,12 @@
+
+
+$html_color: #fff;
+$night_mode: #2A2A2F;
+$theme_color:#ed5757;
+
+@import 'layout';
 @import 'collapsible';
+
 
 h4 {
     font-size:1.6rem;
@@ -9,6 +17,14 @@ h4 {
     margin-right:0 !important;
     vertical-align: top;
     color:firebrick;
+}
+
+.document-nightmode {
+    background-color:$night_mode;
+    .container div {
+        color:#fff;
+        background-color:$night_mode;
+    }
 }
 
 @media screen and (max-width:60em)  {

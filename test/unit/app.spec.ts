@@ -12,9 +12,3 @@ const httpClient = new HttpClient();
 const toastUtil = new ToastUtil(new MdToastService());
 
 // TODO: write some tests?
-
-describe('the app', () => {
-    it('Should display headline', () => {
-        expect(new App(swUtil, ea, toastUtil).message).toBe('Top 10 trending reddit - PWA');
-    });
-});
