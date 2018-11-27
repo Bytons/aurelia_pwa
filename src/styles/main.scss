@@ -1,8 +1,21 @@
 @import 'collapsible';
 
+h4 {
+    font-size:1.6rem;
+}
+
+.title i {
+    line-height: 0.85 !important;
+    margin-right:0 !important;
+    vertical-align: top;
+    color:firebrick;
+}
 
 @media screen and (max-width:60em)  {
 	.container h2 {
 		font-size: 2rem;
-	}
+    }
+    .container h4 {
+        font-size:1.5rem;
+    }
 }
