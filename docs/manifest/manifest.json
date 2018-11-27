@@ -4,8 +4,8 @@
   "theme_color": "#ed5757",
   "background_color": "#827b7b",
   "display": "standalone",
-  "Scope": "/",
-  "start_url": "/",
+  "Scope": "/aurelia_pwa/",
+  "start_url": "/aurelia_pwa/",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
