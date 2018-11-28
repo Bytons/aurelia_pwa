@@ -1,7 +1,7 @@
 <template>
     <nav>
         <div class="nav-wrapper">
-            <a href="/" class="brand-logo  center">${isOnline ? 'Online' : 'Offline'} 
+            <a href="${baseUrl}" class="brand-logo  center">${isOnline ? 'Online' : 'Offline'} 
                 <i if.bind="isOnline" class="material-icons right">cloud</i>
                 <i else class="material-icons right">not_interested</i>
             </a>
