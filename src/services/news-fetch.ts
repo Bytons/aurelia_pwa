@@ -15,7 +15,7 @@ export class NewsFetch {
                     credentials: 'same-origin',
                     headers: {
                         'Accept': 'application/json',
-                        'X-Api-Key': apiKey
+                        'X-Api-Key': apiKey,
                     }
                 })
                 .withInterceptor({
@@ -32,9 +32,9 @@ export class NewsFetch {
 
     }
 
-    public async getTopHeadlines() {
+    public async getTopHeadlines(request = null): Promise<RedditArticle[]> {
         try {
-            const data = await this.client.fetch('top-headlines?sources=reddit-r-all').then((response) => response.json());
+            const data = request ? request : await this.client.fetch('top-headlines?sources=reddit-r-all').then((response) => response.json());
             return data.articles;
         } catch (error) {
             console.log('error', error);
