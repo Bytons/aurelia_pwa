@@ -11,6 +11,6 @@ export class Navbar {
     public attached() {
         this.ea.subscribe('online-status', (isOnline) => {
             this.isOnline = isOnline;
-    });
-}
+        });
+    }
 }
