@@ -18,4 +18,13 @@ export class ToastUtil {
     public customToast(message: string, time: number, styleClass: string) {
         this.toast.show(message, time, styleClass);
     }
+
+    public async updateToast(message: string, time: number, styleClass: string, registerEvent) {
+        await this.toast.show(message, time, styleClass);
+        this.toast.show('Swipe to update', 120000, 'success').then(() => {
+            registerEvent.waiting.postMessage({ id: 'skipWaiting' });
+            window.location.reload();
+        });
+
+    }
 }

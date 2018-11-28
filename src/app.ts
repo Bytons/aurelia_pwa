@@ -24,6 +24,7 @@ export class App {
             this.toastUtil.offlineToast(isOnline);
             this.toggleNightMode(isOnline);
         });
+        this.askToUpdate();
     }
 
     public toggleNightMode(isOnline) {
@@ -31,6 +32,13 @@ export class App {
             document.documentElement.classList.add('document-nightmode');
         } else {
             document.documentElement.classList.remove('document-nightmode');
+        }
+    }
+
+    private async askToUpdate() {
+        const update = await this.swUtil.getRegisterEvent();
+        if (update) {
+            this.toastUtil.updateToast('New version available...', 1000, 'blue', update);
         }
     }
 }
