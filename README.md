@@ -1,4 +1,4 @@
-# Showcasing aurelia framework alongside Google's workbox to create a PWA
+## Aurelia framework alongside Google's workbox to create a PWA
 
 The application uses TypeScript for js compiler + Webpack for bundling and Aurelia as the UI-renderer.
 
