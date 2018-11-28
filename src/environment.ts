@@ -1,6 +1,6 @@
 export default {
-  debug: false,
-  testing: false,
-  swUrl: '/aurelia_pwa/service-worker.js',
-  baseUrl: '/aurelia_pwa/'
+  debug: true,
+  testing: true,
+  swUrl: '/service-worker.js',
+  baseUrl: '/'
 };
