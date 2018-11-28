@@ -14,4 +14,8 @@ export class ToastUtil {
             this.toast.show('Internet connection returned', 2000, 'success');
         }
     }
+
+    public customToast(message: string, time: number, styleClass: string) {
+        this.toast.show(message, time, styleClass);
+    }
 }

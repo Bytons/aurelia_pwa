@@ -32,7 +32,10 @@ workbox.routing.registerRoute(
             expirationPlugin,
             bgSyncPlugin,
             cacheOpaques,
-            new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
+            new workbox.broadcastUpdate.Plugin('reddit-feed-updates', {
+                headersToCheck: ['Last-Modified', 'Expires']
+            }
+            )
         ]
     }),
 );

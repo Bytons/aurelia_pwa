@@ -80,7 +80,7 @@ export class ServiceWorkerUtil {
             const { cacheName, updatedUrl } = event.data.payload;
             const cache = await caches.open(cacheName);
             const updatedResponse = await cache.match(updatedUrl);
-            this.ea.publish(`feed-update:/${updatedUrl}`, updatedResponse);
+            this.ea.publish(`feed-update:`, updatedResponse);
         });
     }
 
