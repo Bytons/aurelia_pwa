@@ -1,4 +1,4 @@
-importScripts("/aurelia_pwa/precache-manifest.0c60e75d93fe780743e19a75aed272da.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.55f7ef5c7890662588ac981a413146dc.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
 workbox.setConfig({ debug: true });
@@ -34,7 +34,10 @@ workbox.routing.registerRoute(
             expirationPlugin,
             bgSyncPlugin,
             cacheOpaques,
-            new workbox.broadcastUpdate.Plugin('reddit-feed-updates')
+            new workbox.broadcastUpdate.Plugin('reddit-feed-updates', {
+                headersToCheck: ['Last-Modified', 'Expires']
+            }
+            )
         ]
     }),
 );
