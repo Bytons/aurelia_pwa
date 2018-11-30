@@ -13,7 +13,7 @@ Thumbs.db
 
 #app-specific
 /src/config/
-
+/src/environment.ts
 # Dependencies
 node_modules
 
