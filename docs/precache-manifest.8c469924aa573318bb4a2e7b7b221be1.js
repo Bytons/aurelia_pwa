@@ -39,7 +39,7 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/logo.png"
   },
   {
-    "revision": "e7ee0508af41590d2489d0e530650e1d",
+    "revision": "2ee561545bf169913002f4bf5ef8386d",
     "url": "/aurelia_pwa/index.html"
   },
   {
@@ -47,6 +47,6 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/favicon.ico"
   },
   {
-    "url": "/aurelia_pwa/app.8ec570522506471b0066.bundle.js"
+    "url": "/aurelia_pwa/app.4fc5cb01067e8151e524.bundle.js"
   }
 ];
