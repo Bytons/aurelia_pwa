@@ -5,7 +5,10 @@
     <navbar></navbar>
     <div class="page-content ${isOnline? 'daymode' : 'nightmode'}" ref="pageContent">
         <div class="container">
-            <div class="center"><h4>${message}</h4></div>
+            <div class="center">
+                <h4>${message}</h4>
+            </div>
+            <md-switch label-off="Nightmode" label-on="" checked.bind="nightModeOn"></md-switch>
             <feed></feed>
             <div>Powered by <a href="https://newsapi.org/">NewsAPI.org</a></div>
         </div>

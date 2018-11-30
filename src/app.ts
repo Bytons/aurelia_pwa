@@ -13,26 +13,32 @@ export class App {
     public linkColor = '#039be5';
     public pageContent: HTMLElement;
     @observable
-    public isOnline = navigator.onLine;
+    public isOnline: boolean = navigator.onLine;
+    @observable
+    public nightModeOn: boolean = false;
 
     constructor(private swUtil: ServiceWorkerUtil, private eventAgggregator: EventAggregator, private toastUtil: ToastUtil) { }
 
     public async activate() {
         await this.swUtil.register();
-        this.toggleNightMode(this.isOnline);
+        this.nightModeOn = this.isOnline ? false : true;
         this.eventAgggregator.subscribe('online-status', (isOnline) => {
             this.toastUtil.offlineToast(isOnline);
-            this.toggleNightMode(isOnline);
+            this.nightModeOn = isOnline ? false : true;
         });
         this.askToUpdate();
     }
 
-    public toggleNightMode(isOnline) {
-        if (!isOnline) {
+    public toggleNightMode(toggleState: boolean) {
+        if (toggleState) {
             document.documentElement.classList.add('document-nightmode');
         } else {
             document.documentElement.classList.remove('document-nightmode');
         }
+    }
+
+    protected nightModeOnChanged() {
+        this.toggleNightMode(this.nightModeOn);
     }
 
     private async askToUpdate() {

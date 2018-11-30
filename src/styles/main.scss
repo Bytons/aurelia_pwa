@@ -25,7 +25,12 @@ h4 {
         color:#fff;
         background-color:$night_mode;
     }
+    .switch label input[type=checkbox]:checked + .lever {
+        background-color:paleturquoise;
+    }
 }
+
+
 
 @media screen and (max-width:60em)  {
 	.container h2 {
