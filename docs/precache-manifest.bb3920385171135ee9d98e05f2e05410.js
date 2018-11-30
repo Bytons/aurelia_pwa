@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "37edbda521e97639f9f87453b06c0fc2",
-    "url": "/aurelia_pwa/manifest/images/icons/icon-152x152.png"
+    "revision": "596beb3e51048d20b31914d5a480e0dc",
+    "url": "/aurelia_pwa/manifest/images/icons/icon-144x144.png"
   },
   {
     "revision": "7aa4f3951a792e898a4277c5c07ff922",
@@ -27,8 +27,8 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/manifest/images/icons/icon-192x192.png"
   },
   {
-    "revision": "596beb3e51048d20b31914d5a480e0dc",
-    "url": "/aurelia_pwa/manifest/images/icons/icon-144x144.png"
+    "revision": "37edbda521e97639f9f87453b06c0fc2",
+    "url": "/aurelia_pwa/manifest/images/icons/icon-152x152.png"
   },
   {
     "revision": "8bd58e064709b83d88b0e07d8b777a35",
@@ -39,7 +39,7 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/logo.png"
   },
   {
-    "revision": "e050aa1c710b883745a4017fa4630cfb",
+    "revision": "e7ee0508af41590d2489d0e530650e1d",
     "url": "/aurelia_pwa/index.html"
   },
   {
@@ -47,6 +47,6 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/favicon.ico"
   },
   {
-    "url": "/aurelia_pwa/app.556441fc1830aa38e54d.bundle.js"
+    "url": "/aurelia_pwa/app.8ec570522506471b0066.bundle.js"
   }
 ];
