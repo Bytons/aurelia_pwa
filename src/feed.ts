@@ -3,7 +3,6 @@ import { autoinject } from 'aurelia-framework';
 import { MdToastService } from 'aurelia-materialize-bridge';
 import { RedditArticle } from 'models/article';
 import { NewsFetch } from 'services/news-fetch';
-import { ToastUtil } from './utils/toast-util';
 
 @autoinject
 export class Feed {
@@ -19,7 +18,7 @@ export class Feed {
         this.sub = this.eventAggregator.subscribe('feed-update:', async (updatedResponse) => {
             setTimeout(() => {
                 this.updateFeed(updatedResponse);
-            }, 2000);
+            }, 200);
         });
 
     }

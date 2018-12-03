@@ -1,7 +1,7 @@
-importScripts("/aurelia_pwa/precache-manifest.8c469924aa573318bb4a2e7b7b221be1.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.ca70e5d073341d9789f736cc9e5d6745.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
-workbox.setConfig({ debug: true });
+workbox.setConfig({ debug: false });
 
 const bgSyncPlugin = new workbox.backgroundSync.Plugin('test-queue', {
     maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
@@ -25,22 +25,38 @@ const imgurSource = 'https://i.imgur.com/'
 
 
 
-// routes
-workbox.routing.registerRoute(
-    new RegExp(apiUrl),
-    workbox.strategies.staleWhileRevalidate({
-        cacheName: 'reddit-feed',
-        plugins: [
-            expirationPlugin,
-            bgSyncPlugin,
-            cacheOpaques,
-            new workbox.broadcastUpdate.Plugin('reddit-feed-updates', {
-                headersToCheck: ['Last-Modified', 'Expires']
+// custom "stale" returner for feed.
+self.addEventListener('fetch', (event) => {
+    const requestUrl = event.request.url;
+    if (requestUrl.includes(apiUrl)) {
+        console.log('Caught request for ' + requestUrl);
+        // Prevent the default, and handle the request ourselves.
+        event.respondWith(async function () {
+            // Try to get the response from a cache.
+            const cache = await caches.open('reddit-feed');
+            const cachedResponse = await cache.match(event.request);
+
+            if (cachedResponse) {
+                // If we found a match in the cache, return it, but also
+                // update the entry in the cache in the background.
+                event.waitUntil(cache.add(event.request));
+                console.log(`Stored new response:${requestUrl} in cache`)
+                // post message to clients notifying of network response
+                const clients = await self.clients.matchAll();
+                for (const client of clients) {
+                    client.postMessage({ cacheName: 'reddit-feed', updateUrl: requestUrl });
+                }
+                return cachedResponse;
             }
-            )
-        ]
-    }),
-);
+            // add fresh request to cache
+            cache.add(event.request)
+            // If we didn't find a match in the cache, use the network.
+            return fetch(event.request)
+        }());
+    }
+});
+
+// routes
 
 workbox.routing.registerRoute(
     new RegExp(redditMedia),

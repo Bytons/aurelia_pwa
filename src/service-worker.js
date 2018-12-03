@@ -23,7 +23,7 @@ const imgurSource = 'https://i.imgur.com/'
 
 
 
-// custom headers to reddit feed
+// custom "stale" returner for feed.
 self.addEventListener('fetch', (event) => {
     const requestUrl = event.request.url;
     if (requestUrl.includes(apiUrl)) {
@@ -39,6 +39,7 @@ self.addEventListener('fetch', (event) => {
                 // update the entry in the cache in the background.
                 event.waitUntil(cache.add(event.request));
                 console.log(`Stored new response:${requestUrl} in cache`)
+                // post message to clients notifying of network response
                 const clients = await self.clients.matchAll();
                 for (const client of clients) {
                     client.postMessage({ cacheName: 'reddit-feed', updateUrl: requestUrl });
