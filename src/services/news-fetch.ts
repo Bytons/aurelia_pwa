@@ -32,9 +32,9 @@ export class NewsFetch {
 
     }
 
-    public async getTopHeadlines(request = null): Promise<RedditArticle[]> {
+    public async getTopHeadlines(): Promise<RedditArticle[]> {
         try {
-            const data = request ? request : await this.client.fetch('top-headlines?sources=reddit-r-all').then((response) => response.json());
+            const data =  await this.client.fetch('top-headlines?sources=reddit-r-all').then((response) => response.json());
             return data.articles;
         } catch (error) {
             console.log('error', error);

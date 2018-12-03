@@ -25,6 +25,5 @@ export class ToastUtil {
             registerEvent.waiting.postMessage({ id: 'skipWaiting' });
             window.location.reload();
         });
-
     }
 }

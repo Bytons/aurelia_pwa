@@ -31,6 +31,7 @@ export class ServiceWorkerUtil {
         this.installPromptListener();
         this.monitorOfflineOnline();
         this.installBroadCastListener();
+        this.installPostMessageListener();
     }
 
     public removeEntryFromCache(entry, cacheName) {
@@ -70,6 +71,15 @@ export class ServiceWorkerUtil {
                 }
                 sessionStorage.promptChoice = choiceResult.outcome;
             });
+        });
+    }
+
+    // listen for postMessages from worker
+    private installPostMessageListener() {
+        navigator.serviceWorker.addEventListener('message', async (event) => {
+            const cache = await caches.open(event.data.cacheName);
+            const updatedResponse = await cache.match(event.data.updateUrl);
+            this.ea.publish('feed-update:', updatedResponse);
         });
     }
 
