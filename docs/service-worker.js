@@ -1,4 +1,4 @@
-importScripts("/aurelia_pwa/precache-manifest.bebbc79a02bcec89d24c20a856ffa6b3.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.49f23138f116e4c5b5b796b60ef188c9.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
 workbox.setConfig({ debug: false });
@@ -27,34 +27,54 @@ const imgurSource = 'https://i.imgur.com/'
 
 // custom "stale" returner for feed.
 self.addEventListener('fetch', (event) => {
-    const requestUrl = event.request.url;
-    if (requestUrl.includes(apiUrl)) {
-        console.log('Caught request for ' + requestUrl);
+    const request = event.request;
+    if (request.url.includes(apiUrl)) {
+        console.log('Caught request for ' + request.url);
         // Prevent the default, and handle the request ourselves.
         event.respondWith(async function () {
             // Try to get the response from a cache.
             const cache = await caches.open('reddit-feed');
-            const cachedResponse = await cache.match(event.request);
+            const cachedResponse = await cache.match(request);
 
             if (cachedResponse) {
                 // If we found a match in the cache, return it, but also
                 // update the entry in the cache in the background.
-                event.waitUntil(cache.add(event.request));
-                console.log(`Stored new response:${requestUrl} in cache`)
-                // post message to clients notifying of network response
-                const clients = await self.clients.matchAll();
-                for (const client of clients) {
-                    client.postMessage({ cacheName: 'reddit-feed', updateUrl: requestUrl });
-                }
+                await event.waitUntil(storeInCacheIfChanged(cache, request, cachedResponse.clone()));
                 return cachedResponse;
             }
-            // add fresh request to cache
-            cache.add(event.request)
+            // add a clone of fresh request to cache
+            cache.add(request.clone());
             // If we didn't find a match in the cache, use the network.
-            return fetch(event.request)
+            return fetch(request)
         }());
     }
 });
+
+async function storeInCacheIfChanged(cache, request, cachedResponse) {
+    fetch(request).then(async (response) => {
+        if (!response.ok) {
+            throw new TypeError('bad response status, not cached!');
+        }
+
+        const oldContent = await cachedResponse.json();
+        const newContent = await response.clone().json();
+
+        // api unfortunately exposes no useful headers, have to compare response content
+        if (JSON.stringify(oldContent.articles) !== JSON.stringify(newContent.articles)) {
+            console.log(`Stored new response:${request.url} in cache`)
+            notifyClientOfCacheUpdate('reddit-feed', request.url);
+            return cache.put(request, response.clone());
+        }
+    })
+}
+
+async function notifyClientOfCacheUpdate(cacheName, updateUrl) {
+    // post message to clients notifying of network response
+    const clients = await self.clients.matchAll();
+    for (const client of clients) {
+        client.postMessage({ cacheName, updateUrl });
+    }
+}
 
 // routes
 
