@@ -15,6 +15,11 @@ const cacheOpaques = new workbox.cacheableResponse.Plugin({
     statuses: [0, 200]
 });
 
+
+// versioning for killswitch
+
+const version = 1
+
 const apiUrl = 'https://newsapi.org/v2/'
 const redditExternalImgpreview = 'https://external-preview.redd.it/'
 const redditInternalPreview = 'https://preview.redd.it/'
@@ -79,7 +84,7 @@ async function notifyClientOfCacheUpdate(cacheName, updateUrl) {
 workbox.routing.registerRoute(
     new RegExp(redditMedia),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'media-reddit-images',
+        cacheName: 'media-reddit-images' + version,
         plugins: [
             expirationPlugin
         ]
@@ -89,7 +94,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(redditExternalImgpreview),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'external-reddit-image-preview-feed',
+        cacheName: 'external-reddit-image-preview-feed' + version,
         plugins: [
             expirationPlugin
         ]
@@ -99,7 +104,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(redditInternalPreview),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'internal-reddit-image-preview-feed',
+        cacheName: 'internal-reddit-image-preview-feed' + version,
         plugins: [
             expirationPlugin
         ]
@@ -109,7 +114,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(imgurSource),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'imgur-image-preview-feed',
+        cacheName: 'imgur-image-preview-feed' + version,
         plugins: [
             expirationPlugin
         ]
