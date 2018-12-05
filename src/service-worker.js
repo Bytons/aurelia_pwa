@@ -20,6 +20,15 @@ const cacheOpaques = new workbox.cacheableResponse.Plugin({
 
 const version = 1
 
+
+// set custom cache parameters
+
+this.workbox.core.setCacheNameDetails({
+    prefix: 'bytons-pwa',
+    suffix: `v:${version}`,
+});
+
+
 const apiUrl = 'https://newsapi.org/v2/'
 const redditExternalImgpreview = 'https://external-preview.redd.it/'
 const redditInternalPreview = 'https://preview.redd.it/'
@@ -84,7 +93,7 @@ async function notifyClientOfCacheUpdate(cacheName, updateUrl) {
 workbox.routing.registerRoute(
     new RegExp(redditMedia),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'media-reddit-images' + version,
+        cacheName: 'media-reddit-images',
         plugins: [
             expirationPlugin
         ]
@@ -94,7 +103,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(redditExternalImgpreview),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'external-reddit-image-preview-feed' + version,
+        cacheName: 'external-reddit-image-preview-feed',
         plugins: [
             expirationPlugin
         ]
@@ -104,7 +113,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(redditInternalPreview),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'internal-reddit-image-preview-feed' + version,
+        cacheName: 'internal-reddit-image-preview-feed',
         plugins: [
             expirationPlugin
         ]
@@ -114,7 +123,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(imgurSource),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'imgur-image-preview-feed' + version,
+        cacheName: 'imgur-image-preview-feed',
         plugins: [
             expirationPlugin
         ]
