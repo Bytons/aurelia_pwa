@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "596beb3e51048d20b31914d5a480e0dc",
-    "url": "/aurelia_pwa/manifest/images/icons/icon-144x144.png"
+    "revision": "8bd58e064709b83d88b0e07d8b777a35",
+    "url": "/aurelia_pwa/manifest/images/icons/icon-128x128.png"
   },
   {
     "revision": "7aa4f3951a792e898a4277c5c07ff922",
@@ -31,8 +31,8 @@ self.__precacheManifest = [
     "url": "/aurelia_pwa/manifest/images/icons/icon-152x152.png"
   },
   {
-    "revision": "8bd58e064709b83d88b0e07d8b777a35",
-    "url": "/aurelia_pwa/manifest/images/icons/icon-128x128.png"
+    "revision": "596beb3e51048d20b31914d5a480e0dc",
+    "url": "/aurelia_pwa/manifest/images/icons/icon-144x144.png"
   },
   {
     "revision": "11d5047ce2a29965d1a2b0553cb3b3eb",

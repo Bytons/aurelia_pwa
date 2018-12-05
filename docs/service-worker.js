@@ -1,4 +1,4 @@
-importScripts("/aurelia_pwa/precache-manifest.49f23138f116e4c5b5b796b60ef188c9.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.e38152d1c0f8e62521f2fcfc66140589.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
 workbox.setConfig({ debug: false });
@@ -16,6 +16,11 @@ const expirationPlugin = new workbox.expiration.Plugin({
 const cacheOpaques = new workbox.cacheableResponse.Plugin({
     statuses: [0, 200]
 });
+
+
+// versioning for killswitch
+
+const version = 1
 
 const apiUrl = 'https://newsapi.org/v2/'
 const redditExternalImgpreview = 'https://external-preview.redd.it/'
@@ -81,7 +86,7 @@ async function notifyClientOfCacheUpdate(cacheName, updateUrl) {
 workbox.routing.registerRoute(
     new RegExp(redditMedia),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'media-reddit-images',
+        cacheName: 'media-reddit-images' + version,
         plugins: [
             expirationPlugin
         ]
@@ -91,7 +96,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(redditExternalImgpreview),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'external-reddit-image-preview-feed',
+        cacheName: 'external-reddit-image-preview-feed' + version,
         plugins: [
             expirationPlugin
         ]
@@ -101,7 +106,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(redditInternalPreview),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'internal-reddit-image-preview-feed',
+        cacheName: 'internal-reddit-image-preview-feed' + version,
         plugins: [
             expirationPlugin
         ]
@@ -111,7 +116,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
     new RegExp(imgurSource),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'imgur-image-preview-feed',
+        cacheName: 'imgur-image-preview-feed' + version,
         plugins: [
             expirationPlugin
         ]
