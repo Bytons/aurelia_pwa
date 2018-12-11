@@ -84,7 +84,7 @@ async function notifyClientOfCacheUpdate(cacheName, updateUrl) {
     // post message to clients notifying of network response
     const clients = await self.clients.matchAll();
     for (const client of clients) {
-        client.postMessage({ cacheName, updateUrl });
+        client.postMessage({ command:'feed-update', cacheName, updateUrl });
     }
 }
 
@@ -137,7 +137,8 @@ self.addEventListener('message', (messageEvent) => {
     switch (messageEvent.data.id) {
         // handle reload of content
         case 'skipWaiting':
-            return skipWaiting();
+            skipAndReload();
+            break;
         // clear all caches and metadata
         case 'clear-cache':
             console.log('all caches emptied')
@@ -154,6 +155,15 @@ self.addEventListener('message', (messageEvent) => {
             console.log(messageEvent);
     }
 });
+
+function skipAndReload() {
+    self.skipWaiting().then(() => {
+        self.clients.claim();
+        self.clients.matchAll().then((clients) => {
+            clients.forEach((client) => client.postMessage({ command: 'reload-window' }));
+        });
+    });
+}
 
 function deleteCache(data) {
     caches.delete(data.cacheName).then(() => {

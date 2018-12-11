@@ -77,9 +77,22 @@ export class ServiceWorkerUtil {
     // listen for postMessages from worker
     private installPostMessageListener() {
         navigator.serviceWorker.addEventListener('message', async (event) => {
-            const cache = await caches.open(event.data.cacheName);
-            const updatedResponse = await cache.match(event.data.updateUrl);
-            this.ea.publish('feed-update:', updatedResponse);
+            switch (event.data.command) {
+                case 'feed-update':
+                    const cache = await caches.open(event.data.cacheName);
+                    const updatedResponse = await cache.match(event.data.updateUrl);
+                    this.ea.publish('feed-update:', updatedResponse);
+                case 'reload-window':
+                    window.location.reload();
+                case null:
+                    console.log('Event data command was null! Wo\'nt do anything!');
+                    break;
+                case undefined:
+                    console.log('Event data command was undefined! Wo\'nt do anything!');
+                    break;
+                default:
+                    console.log('Event command was not pre-defined, logging:', event.data);
+            }
         });
     }
 
