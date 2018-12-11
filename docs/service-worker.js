@@ -1,4 +1,4 @@
-importScripts("/aurelia_pwa/precache-manifest.49f23138f116e4c5b5b796b60ef188c9.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.bd5a9e9fb1073a248c83639326323826.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
 workbox.setConfig({ debug: false });
@@ -86,7 +86,7 @@ async function notifyClientOfCacheUpdate(cacheName, updateUrl) {
     // post message to clients notifying of network response
     const clients = await self.clients.matchAll();
     for (const client of clients) {
-        client.postMessage({ cacheName, updateUrl });
+        client.postMessage({ command:'feed-update', cacheName, updateUrl });
     }
 }
 
@@ -139,7 +139,8 @@ self.addEventListener('message', (messageEvent) => {
     switch (messageEvent.data.id) {
         // handle reload of content
         case 'skipWaiting':
-            return skipWaiting();
+            skipAndReload();
+            break;
         // clear all caches and metadata
         case 'clear-cache':
             console.log('all caches emptied')
@@ -156,6 +157,15 @@ self.addEventListener('message', (messageEvent) => {
             console.log(messageEvent);
     }
 });
+
+function skipAndReload() {
+    self.skipWaiting().then(() => {
+        self.clients.claim();
+        self.clients.matchAll().then((clients) => {
+            clients.forEach((client) => client.postMessage({ command: 'reload-window' }));
+        });
+    });
+}
 
 function deleteCache(data) {
     caches.delete(data.cacheName).then(() => {
