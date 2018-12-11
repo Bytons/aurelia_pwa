@@ -84,7 +84,7 @@ async function notifyClientOfCacheUpdate(cacheName, updateUrl) {
     // post message to clients notifying of network response
     const clients = await self.clients.matchAll();
     for (const client of clients) {
-        client.postMessage({ command:'feed-update', cacheName, updateUrl });
+        client.postMessage({ command: 'feed-update', cacheName, updateUrl });
     }
 }
 
@@ -156,12 +156,13 @@ self.addEventListener('message', (messageEvent) => {
     }
 });
 
-function skipAndReload() {
-    self.skipWaiting().then(() => {
-        self.clients.claim();
-        self.clients.matchAll().then((clients) => {
-            clients.forEach((client) => client.postMessage({ command: 'reload-window' }));
-        });
+async function skipAndReload() {
+    await self.skipWaiting();
+    const clients = await self.clients.matchAll({
+        includeUncontrolled: true
+    });
+    clients.forEach((client) => {
+        client.postMessage({ command: 'reload-window' })
     });
 }
 
