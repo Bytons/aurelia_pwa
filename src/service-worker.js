@@ -1,5 +1,5 @@
 // disable/enable debug logging
-workbox.setConfig({ debug: false });
+workbox.setConfig({ debug: true });
 
 const bgSyncPlugin = new workbox.backgroundSync.Plugin('test-queue', {
     maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
@@ -18,7 +18,7 @@ const cacheOpaques = new workbox.cacheableResponse.Plugin({
 
 // versioning for killswitch
 
-const version = 1
+const version = 1.2
 
 
 // set custom cache parameters

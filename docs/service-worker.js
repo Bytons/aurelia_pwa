@@ -1,7 +1,7 @@
 importScripts("/aurelia_pwa/precache-manifest.bd5a9e9fb1073a248c83639326323826.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
-workbox.setConfig({ debug: false });
+workbox.setConfig({ debug: true });
 
 const bgSyncPlugin = new workbox.backgroundSync.Plugin('test-queue', {
     maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
