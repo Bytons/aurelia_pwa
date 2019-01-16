@@ -8,7 +8,11 @@
             <div class="center">
                 <h4>${message}</h4>
             </div>
-            <md-switch label-off="" label-on="Nightmode" checked.bind="nightModeOn"></md-switch>
+            <a  id="night-mode-switch" click.delegate="setNightModeFromClient()">
+                <i class="material-icons" if.bind="nightModeOn">invert_colors_off</i>
+                <i class="material-icons" else>invert_colors</i>
+                <span>Nightmode</span>
+            </a>
             <feed></feed>
             <div>Powered by <a href="https://newsapi.org/">NewsAPI.org</a></div>
         </div>

@@ -37,6 +37,10 @@ export class App {
         }
     }
 
+    protected setNightModeFromClient() {
+        this.nightModeOn = !this.nightModeOn;
+    }
+
     protected nightModeOnChanged() {
         this.toggleNightMode(this.nightModeOn);
     }

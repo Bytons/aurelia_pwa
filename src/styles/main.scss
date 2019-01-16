@@ -24,13 +24,20 @@ h4 {
     .container div {
         color:#fff;
         background-color:$night_mode;
+        transition: background-color 0.8s ease-in-out;
     }
-    .switch label input[type=checkbox]:checked + .lever {
-        background-color:paleturquoise;
-    }
+    transition: background-color 0.3s ease-in-out;
 }
 
-
+#night-mode-switch {
+    cursor: pointer;
+    display:flex;
+    flex-wrap: nowrap;
+    margin:10px;
+    span {
+        margin-top:2px;
+    }
+}
 
 @media screen and (max-width:60em)  {
 	.container h2 {
