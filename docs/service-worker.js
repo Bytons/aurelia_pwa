@@ -1,4 +1,4 @@
-importScripts("/aurelia_pwa/precache-manifest.bd5a9e9fb1073a248c83639326323826.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
+importScripts("/aurelia_pwa/precache-manifest.22b7ec83743963ba21d934f1206cc50c.js", "/aurelia_pwa/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/aurelia_pwa/workbox-v3.6.3"});
 // disable/enable debug logging
 workbox.setConfig({ debug: true });
@@ -20,7 +20,7 @@ const cacheOpaques = new workbox.cacheableResponse.Plugin({
 
 // versioning for killswitch
 
-const version = 1
+const version = 1.2
 
 
 // set custom cache parameters
